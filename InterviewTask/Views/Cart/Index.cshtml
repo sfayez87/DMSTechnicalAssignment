@@ -1,0 +1,84 @@
+﻿@model InterviewTask.ViewModels.ShoppingCartViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Add Items", "Index", "Shop")
+</p>
+<p>
+    @Html.ActionLink("Clear My Cart", "ClearCart", "Cart")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Item Name
+            </th>
+            <th>
+                Item Description
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Unit of Measure
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                SubTotal Price
+            </th>
+            <th>
+                Discount Code
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.ShoppingCartItems)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UOMName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountCode)
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "RemoveFromCart", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.ShoppingCartTotal
+            </td>
+    </tfoot>
+</table>
+<div class="text-center">
+    @Html.ActionLink("Check Out", "CheckOut", "Order",null, new { @class = "btn btn-primary" })
+</div>

@@ -1,0 +1,92 @@
+﻿@model InterviewTask.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>My Order</h2>
+<button onclick="PrintOrder()" class="btn btn-primary">Print My Order</button>
+<br />
+<br />
+<div id="orderFrame">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Order Date</th>
+                <th>Due Date</th>
+                <th>Customer Code</th>
+                <th>Tax Code</th>
+                <th>Tax Value</th>
+                <th>Discount Value</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.OrderHeader.Id</td>
+                <td>@Model.OrderHeader.OrderDate.Value.ToShortDateString()</td>
+                <td>@Model.OrderHeader.DueDate.Value.ToShortDateString()</td>
+                <td>@Model.OrderHeader.CustomerCode</td>
+                <td>@Model.OrderHeader.TaxCode%</td>
+                <td>@Model.OrderHeader.TaxValue EGP</td>
+                <td>@Model.OrderHeader.DiscountValue EGP</td>
+                <td>@Model.OrderHeader.TotalPrice EGP</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Unit of Measure</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Discount Code</th>
+                <th>Discount Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderDetail)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UOMName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemPrice) EGP
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Qty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice) EGP
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountCode)%
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountValue) EGP
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        function PrintOrder() {
+            $("#orderFrame").printThis();
+        }
+    </script>
+}
